@@ -55,7 +55,8 @@ namespace Doando.Models
                 .Property(e => e.CEP)
                 .IsUnicode(false);
 
-          
+            modelBuilder.Entity<Ong>().ToTable("Ong");
+
             modelBuilder.Entity<Ong>()
                 .Property(e => e.CNPJ)
                 .IsUnicode(false);
@@ -105,5 +106,6 @@ namespace Doando.Models
                 .WithMany()
                 .HasForeignKey(e => e.ID_ONG);
         }
+
     }
 }
