@@ -41,7 +41,7 @@ namespace Doando.Controllers
         {
             ViewBag.ID_ONG = new SelectList
                (
-                    db.Users.ToList(),
+                    db.Ong.ToList(),
                    "ID_ONG",
                    "NOME"
                );
@@ -80,7 +80,7 @@ namespace Doando.Controllers
             }
             ViewBag.ID_ONG = new SelectList
                (
-                    db.Users.ToList(),
+                    db.Ong.ToList(),
                    "ID_ONG",
                    "NOME",
                    necessidade.ID_ONG
