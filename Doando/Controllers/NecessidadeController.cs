@@ -78,6 +78,13 @@ namespace Doando.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ID_ONG = new SelectList
+               (
+                    db.Ong.ToList(),
+                   "ID_ONG",
+                   "NOME",
+                   necessidade.ID_ONG
+               );
             return View(necessidade);
         }
 
