@@ -446,3 +446,12 @@ form .row:first-child .floating-label-form-group {
 footer {
     top:70px;
 }
+
+td {
+  padding: 4px!important;
+  font-size: 10pt;
+}
+td > a {
+    font-size:7pt;
+    font-weight:600;
+}
