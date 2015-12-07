@@ -435,3 +435,14 @@ form .row:first-child .floating-label-form-group {
     display: none;
     opacity: 0;
 }
+
+
+.doando-content {
+    top: 100px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+footer {
+    top:70px;
+}
