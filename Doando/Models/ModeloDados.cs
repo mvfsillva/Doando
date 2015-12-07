@@ -4,12 +4,20 @@ namespace Doando.Models
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
-    public partial class ModeloDados : DbContext
+    public partial class ModeloDados : IdentityDbContext<ApplicationUser>
     {
         public ModeloDados()
             : base("name=ModeloDados")
         {
+        }
+
+
+        public static ModeloDados Create()
+        {
+            return new ModeloDados();
         }
 
         public virtual DbSet<Endereco> Endereco { get; set; }
@@ -18,6 +26,8 @@ namespace Doando.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Endereco>()
                 .Property(e => e.RUA)
                 .IsUnicode(false);
