@@ -39,6 +39,13 @@ namespace Doando.Controllers
         // GET: Necessidade/Create
         public ActionResult Create()
         {
+            ViewBag.ID_ONG = new SelectList
+               (
+                    db.Ong.ToList(),
+                   "ID_ONG",
+                   "NOME"
+               );
+
             return View();
         }
 
