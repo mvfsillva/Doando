@@ -9,6 +9,8 @@ namespace Doando.Models
     [Table("Ong")]
     public partial class Ong
     {
+        [Key]
+        public int ID_ONG { get; set; }
 
         [Required]
         [StringLength(14)]
@@ -22,7 +24,9 @@ namespace Doando.Models
         [StringLength(100)]
         public string SITE { get; set; }
 
-        public string EMAIL { get { return Email; } set { Email = value; } }
+        [Required]
+        [StringLength(100)]
+        public string EMAIL { get; set; }
 
         public int ID_END { get; set; }
 

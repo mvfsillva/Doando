@@ -26,7 +26,7 @@ namespace Doando.Models
 
         public DateTime DATA { get; set; }
 
-        public string ID_ONG { get; set; }
+        public int ID_ONG { get; set; }
 
         [Required]
         [StringLength(14)]

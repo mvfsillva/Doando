@@ -7,7 +7,7 @@ namespace Doando.Models
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public partial class ModeloDados : IdentityDbContext<Ong>
+    public partial class ModeloDados : IdentityDbContext<ApplicationUser>
     {
         public ModeloDados()
             : base("name=ModeloDados")
@@ -20,6 +20,7 @@ namespace Doando.Models
             return new ModeloDados();
         }
 
+        public virtual DbSet<Ong> Ong { get; set; }
         public virtual DbSet<Endereco> Endereco { get; set; }
         public virtual DbSet<Necessidade> Necessidade { get; set; }
 
@@ -55,8 +56,6 @@ namespace Doando.Models
                 .Property(e => e.CEP)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Ong>().ToTable("Ong");
-
             modelBuilder.Entity<Ong>()
                 .Property(e => e.CNPJ)
                 .IsUnicode(false);
@@ -70,10 +69,8 @@ namespace Doando.Models
                 .IsUnicode(false);
             
             modelBuilder.Entity<Ong>()
-            .Property(e => e.Email).HasColumnName("EMAIL");
+            .Property(e => e.EMAIL);
 
-            modelBuilder.Entity<Ong>()
-                .Ignore(e => e.EMAIL);
 
             modelBuilder.Entity<Ong>()
                 .HasRequired(e => e.Endereco)

@@ -19,7 +19,7 @@ namespace Doando.Controllers
         // GET: Ong
         public async Task<ActionResult> Index()
         {
-            return View(await db.Users.ToListAsync());
+            return View(await db.Ong.ToListAsync());
         }
 
         // GET: Ong/Details/5
@@ -29,7 +29,7 @@ namespace Doando.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ong ong = db.Users.Find(id);
+            Ong ong = db.Ong.Find(id);
             if (ong == null)
             {
                 return HttpNotFound();
@@ -57,9 +57,11 @@ namespace Doando.Controllers
                 {
                     Endereco = ongVM.Endereco,
                     CNPJ = ongVM.CNPJ,
-                    //TODO: completar o objeto
+                    SITE = ongVM.SITE,
+                    NOME = ongVM.NOME,
+                    EMAIL = ongVM.EMAIL
                 };
-                db.Users.Add(ong);
+                db.Ong.Add(ong);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -75,7 +77,7 @@ namespace Doando.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ong ong =  db.Users.Find(id);
+            Ong ong =  db.Ong.Find(id);
             if (ong == null)
             {
                 return HttpNotFound();
@@ -108,7 +110,7 @@ namespace Doando.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ong ong = db.Users.Find(id);
+            Ong ong = db.Ong.Find(id);
             if (ong == null)
             {
                 return HttpNotFound();
@@ -122,8 +124,8 @@ namespace Doando.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ong ong =  db.Users.Find(id);
-            db.Users.Remove(ong);
+            Ong ong =  db.Ong.Find(id);
+            db.Ong.Remove(ong);
             db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
