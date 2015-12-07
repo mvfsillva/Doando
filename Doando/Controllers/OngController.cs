@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Doando.Models;
+using Doando.ViewModel;
 
 namespace Doando.Controllers
 {
@@ -48,16 +49,22 @@ namespace Doando.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID_ONG,CNPJ,NOME,SITE,EMAIL,Endereco")] Ong ong)
+        public async Task<ActionResult> Create([Bind(Include = "CNPJ,NOME,SITE,EMAIL,Endereco")] OngViewModel ongVM)
         {
             if (ModelState.IsValid)
             {
+                Ong ong = new Ong()
+                {
+                    Endereco = ongVM.Endereco,
+                    CNPJ = ongVM.CNPJ,
+                    //TODO: completar o objeto
+                };
                 db.Users.Add(ong);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(ong);
+            return View(ongVM);
         }
 
         // GET: Ong/Edit/5
