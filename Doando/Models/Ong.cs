@@ -9,8 +9,6 @@ namespace Doando.Models
     [Table("Ong")]
     public partial class Ong
     {
-        [Key]
-        public int ID_ONG { get; set; }
 
         [Required]
         [StringLength(14)]
@@ -24,12 +22,12 @@ namespace Doando.Models
         [StringLength(100)]
         public string SITE { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string EMAIL { get; set; }
+        public string EMAIL { get { return Email; } set { Email = value; } }
 
-        [Required]
-        [StringLength(150)]
-        public string ENDERECO { get; set; }
+        public int ID_END { get; set; }
+
+        public virtual Endereco Endereco { get; set; }
+
+        public virtual ICollection<Necessidade> Necessidades { get; set; }
     }
 }

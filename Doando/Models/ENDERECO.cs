@@ -39,5 +39,7 @@ namespace Doando.Models
         [Required]
         [StringLength(100)]
         public string CEP { get; set; }
+
+        public virtual Ong Ong { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Doando.Models
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public partial class ModeloDados : IdentityDbContext<ApplicationUser>
+    public partial class ModeloDados : IdentityDbContext<Ong>
     {
         public ModeloDados()
             : base("name=ModeloDados")
@@ -22,7 +22,6 @@ namespace Doando.Models
 
         public virtual DbSet<Endereco> Endereco { get; set; }
         public virtual DbSet<Necessidade> Necessidade { get; set; }
-        public virtual DbSet<Ong> Ong { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -56,9 +55,38 @@ namespace Doando.Models
                 .Property(e => e.CEP)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Necessidade>()
-                .Property(e => e.DESCRICAO)
+          
+            modelBuilder.Entity<Ong>()
+                .Property(e => e.CNPJ)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Ong>()
+                .Property(e => e.NOME)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Ong>()
+                .Property(e => e.SITE)
+                .IsUnicode(false);
+            
+            modelBuilder.Entity<Ong>()
+            .Property(e => e.Email).HasColumnName("EMAIL");
+
+            modelBuilder.Entity<Ong>()
+                .Ignore(e => e.EMAIL);
+
+            modelBuilder.Entity<Ong>()
+                .HasRequired(e => e.Endereco)
+                .WithMany()
+                .HasForeignKey(e => e.ID_END);
+
+            modelBuilder.Entity<Ong>()
+                .HasMany(e => e.Necessidades)
+                .WithRequired(e => e.Ong);
+
+
+            modelBuilder.Entity<Necessidade>()
+               .Property(e => e.DESCRICAO)
+               .IsUnicode(false);
 
             modelBuilder.Entity<Necessidade>()
                 .Property(e => e.TITULO)
@@ -72,25 +100,10 @@ namespace Doando.Models
                 .Property(e => e.CNPJ)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Ong>()
-                .Property(e => e.CNPJ)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Ong>()
-                .Property(e => e.NOME)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Ong>()
-                .Property(e => e.SITE)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Ong>()
-                .Property(e => e.EMAIL)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Ong>()
-                .Property(e => e.ENDERECO)
-                .IsUnicode(false);
+            modelBuilder.Entity<Necessidade>()
+                .HasRequired(e => e.Ong)
+                .WithMany()
+                .HasForeignKey(e => e.ID_ONG);
         }
     }
 }
