@@ -32,6 +32,10 @@ namespace Doando.Models
 
         public virtual Endereco Endereco { get; set; }
 
+        public string ID_USER { get; set; }
+
+        public virtual ApplicationUser Usuario { get; set; }
+
         public virtual ICollection<Necessidade> Necessidades { get; set; }
     }
 }

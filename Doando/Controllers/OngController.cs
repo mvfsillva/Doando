@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Doando.Models;
 using Doando.ViewModel;
+using Microsoft.AspNet.Identity;
 
 namespace Doando.Controllers
 {
@@ -46,8 +47,9 @@ namespace Doando.Controllers
         // POST: Ong/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "CNPJ,NOME,SITE,EMAIL,Endereco")] OngViewModel ongVM)
         {
@@ -59,7 +61,8 @@ namespace Doando.Controllers
                     CNPJ = ongVM.CNPJ,
                     SITE = ongVM.SITE,
                     NOME = ongVM.NOME,
-                    EMAIL = ongVM.EMAIL
+                    EMAIL = ongVM.EMAIL,
+                    ID_USER = User.Identity.GetUserId()
                 };
                 db.Ong.Add(ong);
                 await db.SaveChangesAsync();
@@ -77,12 +80,16 @@ namespace Doando.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ong ong =  db.Ong.Find(id);
+            Ong ong = db.Ong.Find(id);
             if (ong == null)
             {
                 return HttpNotFound();
             }
-            return View(ong);
+            if (User.Identity.GetUserId().Equals(ong.ID_USER))
+            {
+                return View(ong);
+            }
+            return View();
         }
 
         // POST: Ong/Edit/5
@@ -115,7 +122,11 @@ namespace Doando.Controllers
             {
                 return HttpNotFound();
             }
-            return View(ong);
+            if (User.Identity.GetUserId().Equals(ong.ID_USER))
+            {
+                return View(ong);
+            }
+            return View();
         }
 
         // POST: Ong/Delete/5
@@ -124,9 +135,12 @@ namespace Doando.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ong ong =  db.Ong.Find(id);
-            db.Ong.Remove(ong);
-            db.SaveChangesAsync();
+            Ong ong = db.Ong.Find(id);
+            if (ong != null && User.Identity.GetUserId().Equals(ong.ID_USER))
+            {
+                db.Ong.Remove(ong);
+                db.SaveChangesAsync();
+            }
             return RedirectToAction("Index");
         }
 

@@ -78,6 +78,11 @@ namespace Doando.Models
                 .HasForeignKey(e => e.ID_END);
 
             modelBuilder.Entity<Ong>()
+                .HasRequired(e => e.Usuario)
+                .WithMany()
+                .HasForeignKey(e => e.ID_USER);
+
+            modelBuilder.Entity<Ong>()
                 .HasMany(e => e.Necessidades)
                 .WithRequired(e => e.Ong);
 
