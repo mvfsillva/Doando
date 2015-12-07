@@ -13,7 +13,7 @@ namespace Doando.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201512072134421_initial"; }
+            get { return "201512072241522_initial"; }
         }
         
         string IMigrationMetadata.Source

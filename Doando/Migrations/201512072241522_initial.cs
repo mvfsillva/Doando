@@ -31,7 +31,7 @@ namespace Doando.Migrations
                         TITULO = c.String(nullable: false, maxLength: 80, unicode: false),
                         PRIORIDADE = c.String(nullable: false, maxLength: 100, unicode: false),
                         DATA = c.DateTime(nullable: false),
-                        ID_ONG = c.String(nullable: false, maxLength: 128),
+                        ID_ONG = c.Int(nullable: false),
                         CNPJ = c.String(nullable: false, maxLength: 14, unicode: false),
                     })
                 .PrimaryKey(t => t.ID_NECESSIDADE)
@@ -42,12 +42,46 @@ namespace Doando.Migrations
                 "dbo.Ong",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        ID_ONG = c.Int(nullable: false, identity: true),
                         CNPJ = c.String(nullable: false, maxLength: 14, unicode: false),
                         NOME = c.String(nullable: false, maxLength: 100, unicode: false),
                         SITE = c.String(nullable: false, maxLength: 100, unicode: false),
+                        EMAIL = c.String(nullable: false, maxLength: 100),
                         ID_END = c.Int(nullable: false),
-                        EMAIL = c.String(maxLength: 256),
+                    })
+                .PrimaryKey(t => t.ID_ONG)
+                .ForeignKey("dbo.Endereco", t => t.ID_END, cascadeDelete: true)
+                .Index(t => t.ID_END);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.AspNetUsers",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),
@@ -60,8 +94,6 @@ namespace Doando.Migrations
                         UserName = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Endereco", t => t.ID_END, cascadeDelete: true)
-                .Index(t => t.ID_END)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
@@ -74,7 +106,7 @@ namespace Doando.Migrations
                         ClaimValue = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Ong", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
             CreateTable(
@@ -86,54 +118,32 @@ namespace Doando.Migrations
                         UserId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
-                .ForeignKey("dbo.Ong", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.Ong", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.Ong");
             DropForeignKey("dbo.Necessidade", "ID_ONG", "dbo.Ong");
-            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.Ong");
             DropForeignKey("dbo.Ong", "ID_END", "dbo.Endereco");
-            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.Ong");
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.Ong", "UserNameIndex");
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Ong", new[] { "ID_END" });
             DropIndex("dbo.Necessidade", new[] { "ID_ONG" });
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
+            DropTable("dbo.AspNetUsers");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.AspNetRoles");
             DropTable("dbo.Ong");
             DropTable("dbo.Necessidade");
             DropTable("dbo.Endereco");
