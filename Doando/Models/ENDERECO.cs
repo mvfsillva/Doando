@@ -6,14 +6,9 @@ namespace Doando.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ENDERECO")]
-    public partial class ENDERECO
+    [Table("Endereco")]
+    public partial class Endereco
     {
-        public ENDERECO()
-        {
-            CAD_ONG = new HashSet<CAD_ONG>();
-        }
-
         [Key]
         public int ID_END { get; set; }
 
@@ -44,7 +39,5 @@ namespace Doando.Models
         [Required]
         [StringLength(100)]
         public string CEP { get; set; }
-
-        public virtual ICollection<CAD_ONG> CAD_ONG { get; set; }
     }
 }

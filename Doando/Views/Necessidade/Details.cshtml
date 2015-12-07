@@ -1,0 +1,66 @@
+﻿@model Doando.Models.Necessidade
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Necessidade</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRICAO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DESCRICAO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TITULO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TITULO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRIORIDADE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRIORIDADE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DATA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DATA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_ONG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_ONG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNPJ)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_NECESSIDADE }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

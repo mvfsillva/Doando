@@ -6,7 +6,8 @@ namespace Doando.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class CAD_ONG
+    [Table("Ong")]
+    public partial class Ong
     {
         [Key]
         public int ID_ONG { get; set; }
@@ -27,8 +28,8 @@ namespace Doando.Models
         [StringLength(100)]
         public string EMAIL { get; set; }
 
-        public int ID_END { get; set; }
-
-        public virtual ENDERECO ENDERECO { get; set; }
+        [Required]
+        [StringLength(150)]
+        public string ENDERECO { get; set; }
     }
 }

@@ -6,7 +6,8 @@ namespace Doando.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class CAD_NECESSIDADE
+    [Table("Necessidade")]
+    public partial class Necessidade
     {
         [Key]
         public int ID_NECESSIDADE { get; set; }
