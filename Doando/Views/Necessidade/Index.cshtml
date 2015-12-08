@@ -17,7 +17,7 @@
         <th style="width:250px;"> @Html.DisplayNameFor(model => model.DESCRICAO)</th>
         <th> @Html.DisplayNameFor(model => model.PRIORIDADE) </th>
         <th> @Html.DisplayNameFor(model => model.DATA) </th>
-        <th> @Html.DisplayNameFor(model => model.ID_ONG)</th>
+        <th> @Html.DisplayNameFor(model => model.Ong)</th>
         <th></th>
     </tr>
 
@@ -28,7 +28,7 @@
             <td> @Html.DisplayFor(modelItem => item.DESCRICAO) </td>
             <td> @Html.DisplayFor(modelItem => item.PRIORIDADE) </td>
             <td> @Html.DisplayFor(modelItem => item.DATA)</td>
-            <td> @Html.DisplayFor(modelItem => item.ID_ONG)</td>            
+            <td> @Html.DisplayFor(modelItem => item.Ong.NOME)</td>            
             <td>
                 <div class="form-group">
                     <div class="col-md-12 text-center" style="top:10px;">
