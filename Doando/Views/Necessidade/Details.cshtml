@@ -1,10 +1,10 @@
 ﻿@model Doando.Models.Necessidade
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
     <h4>Necessidade</h4>
@@ -65,7 +65,7 @@
         <div class="col-md-offset-1 col-md-10">
             @if (Request.IsAuthenticated)
             {
-                <div class="btn btn-default">
+                <div class="btn btn-info">
                     @Html.ActionLink("Editar", "Edit", new { id = Model.ID_NECESSIDADE })
                 </div>
                 <div class="btn btn-default">
