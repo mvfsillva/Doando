@@ -50,13 +50,13 @@
             @Html.DisplayFor(model => model.ID_ONG)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.CNPJ)
-        </dt>
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.CNPJ)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
@@ -65,7 +65,7 @@
         <div class="col-md-offset-1 col-md-10">
             @if (Request.IsAuthenticated)
             {
-                <div class="btn btn-info">
+                <div class="btn btn-default">
                     @Html.ActionLink("Editar", "Edit", new { id = Model.ID_NECESSIDADE })
                 </div>
                 <div class="btn btn-default">

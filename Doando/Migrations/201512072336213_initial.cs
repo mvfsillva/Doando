@@ -32,7 +32,7 @@ namespace Doando.Migrations
                         PRIORIDADE = c.String(nullable: false, maxLength: 100, unicode: false),
                         DATA = c.DateTime(nullable: false),
                         ID_ONG = c.Int(nullable: false),
-                        CNPJ = c.String(nullable: false, maxLength: 14, unicode: false),
+                        //CNPJ = c.String(nullable: false, maxLength: 14, unicode: false),
                     })
                 .PrimaryKey(t => t.ID_NECESSIDADE)
                 .ForeignKey("dbo.Ong", t => t.ID_ONG, cascadeDelete: true)

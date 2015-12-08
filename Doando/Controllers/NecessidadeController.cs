@@ -58,7 +58,7 @@ namespace Doando.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG,CNPJ")] Necessidade necessidade)
+        public async Task<ActionResult> Create([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG")] Necessidade necessidade)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace Doando.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG,CNPJ")] Necessidade necessidadeVM)
+        public async Task<ActionResult> Edit([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG")] Necessidade necessidadeVM)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace Doando.Controllers
                     necessidade.TITULO = necessidadeVM.TITULO;
                     necessidade.DESCRICAO = necessidadeVM.DESCRICAO;
                     necessidade.DATA = necessidadeVM.DATA;
-                    necessidade.CNPJ = necessidadeVM.CNPJ;
+                    //necessidade.CNPJ = necessidadeVM.CNPJ;
                     db.Entry(necessidade).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                 }
