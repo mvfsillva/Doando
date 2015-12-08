@@ -57,14 +57,17 @@
         <td>
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-10">
-                    <div class="btn btn-default ">
-                        @Html.ActionLink("Editar", "Edit", new { id = item.ID_NECESSIDADE })
-                    </div>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div class="btn btn-default ">
+                            @Html.ActionLink("Editar", "Edit", new { id = item.ID_NECESSIDADE })
+                        </div>
+                        <div class="btn btn-default">
+                            @Html.ActionLink("Deletar", "Delete", new { id = item.ID_NECESSIDADE })
+                        </div>
+                    }
                     <div class="btn btn-default">
                         @Html.ActionLink("Detalhes", "Details", new { id = item.ID_NECESSIDADE })
-                    </div>
-                    <div class="btn btn-default">
-                        @Html.ActionLink("Deletar", "Delete", new { id = item.ID_NECESSIDADE })
                     </div>
                 </div>
             </div>
