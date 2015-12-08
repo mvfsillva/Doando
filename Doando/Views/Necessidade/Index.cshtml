@@ -4,10 +4,12 @@
     ViewBag.Title = "Necessidades";
 }
 
-<h2>Index</h2>
+<h2>Necessidades</h2>
 
 <p>
-    @Html.ActionLink("Adicionar", "Create")
+    <div class="btn btn-default">
+        @Html.ActionLink("Adicionar", "Create")
+    </div>
 </p>
 <table class="table">
     <tr>
@@ -53,9 +55,19 @@
             @Html.DisplayFor(modelItem => item.CNPJ)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID_NECESSIDADE }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID_NECESSIDADE }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID_NECESSIDADE })
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <div class="btn btn-default ">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID_NECESSIDADE })
+                    </div>
+                    <div class="btn btn-default">
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.ID_NECESSIDADE })
+                    </div>
+                    <div class="btn btn-default">
+                        @Html.ActionLink("Deletar", "Delete", new { id = item.ID_NECESSIDADE })
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
 }
