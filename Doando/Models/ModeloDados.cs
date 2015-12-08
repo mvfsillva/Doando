@@ -99,9 +99,9 @@ namespace Doando.Models
                 .Property(e => e.PRIORIDADE)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Necessidade>()
-                .Property(e => e.CNPJ)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Necessidade>()
+            //    .Property(e => e.CNPJ)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<Necessidade>()
                 .HasRequired(e => e.Ong)

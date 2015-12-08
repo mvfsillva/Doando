@@ -27,11 +27,7 @@ namespace Doando.Models
         public DateTime DATA { get; set; }
 
         public int ID_ONG { get; set; }
-
-        [Required]
-        [StringLength(14)]
-        public string CNPJ { get; set; }
-
+        
         public virtual Ong Ong { get; set; }
     }
 }

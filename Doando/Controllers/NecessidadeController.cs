@@ -118,8 +118,7 @@ namespace Doando.Controllers
                     necessidade.PRIORIDADE = necessidadeVM.PRIORIDADE;
                     necessidade.TITULO = necessidadeVM.TITULO;
                     necessidade.DESCRICAO = necessidadeVM.DESCRICAO;
-                    necessidade.DATA = necessidadeVM.DATA;
-                    //necessidade.CNPJ = necessidadeVM.CNPJ;
+                    necessidade.DATA = necessidadeVM.DATA;                    
                     db.Entry(necessidade).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                 }
