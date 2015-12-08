@@ -58,7 +58,16 @@ namespace Doando.Controllers
             {
                 Ong ong = new Ong()
                 {
-                    Endereco = ongVM.Endereco,
+                    Endereco = new Endereco()
+                    {
+                        BAIRRO = ongVM.Endereco.BAIRRO,
+                        CEP = ongVM.Endereco.CEP,
+                        CIDADE = ongVM.Endereco.CIDADE,
+                        ESTADO = ongVM.Endereco.ESTADO,
+                        RUA = ongVM.Endereco.RUA,
+                        TELEFONE_PRIMARIO = ongVM.Endereco.TELEFONE_PRIMARIO,
+                        TELEFONE_SECUNDARIO = ongVM.Endereco.TELEFONE_SECUNDARIO
+                    },
                     CNPJ = ongVM.CNPJ,
                     SITE = ongVM.SITE,
                     NOME = ongVM.NOME,

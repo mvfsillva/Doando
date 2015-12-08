@@ -17,6 +17,6 @@ namespace Doando.ViewModel
         public string EMAIL { get; set; }
 
 
-        public virtual Endereco Endereco { get; set; }
+        public virtual EnderecoViewModel Endereco { get; set; }
     }
 }
