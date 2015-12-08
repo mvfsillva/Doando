@@ -7,7 +7,9 @@
 <h2>ONG's</h2>
 
 <p>
-    @Html.ActionLink("Adicionar", "Create")
+    <div class="btn btn-default">
+        @Html.ActionLink("Adicionar", "Create")
+    </div>
 </p>
 <table class="table">
     <tr>
@@ -47,9 +49,19 @@
             @Html.DisplayFor(modelItem => item.Endereco.RUA)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.ID_ONG }) |
-            @Html.ActionLink("Detalhes", "Details", new { id = item.ID_ONG }) |
-            @Html.ActionLink("Deletar", "Delete", new { id = item.ID_ONG })
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <div class="btn btn-default ">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID_ONG })
+                    </div>
+                    <div class="btn btn-default">
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.ID_ONG })
+                    </div>
+                    <div class="btn btn-default">
+                        @Html.ActionLink("Deletar", "Delete", new { id = item.ID_ONG })
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
 }
