@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Doando.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Doando.Controllers
 {
@@ -37,11 +38,13 @@ namespace Doando.Controllers
         }
 
         // GET: Necessidade/Create
+        [Authorize]
         public ActionResult Create()
         {
+            string userId = User.Identity.GetUserId();
             ViewBag.ID_ONG = new SelectList
                (
-                    db.Ong.ToList(),
+                    db.Ong.Where(ong => ong.ID_USER == userId).ToList(),
                    "ID_ONG",
                    "NOME"
                );
@@ -53,13 +56,18 @@ namespace Doando.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG,CNPJ")] Necessidade necessidade)
         {
             if (ModelState.IsValid)
             {
-                db.Necessidade.Add(necessidade);
-                await db.SaveChangesAsync();
+                string userId = User.Identity.GetUserId();
+                if (db.Ong.Any(o => o.ID_USER == userId))
+                {
+                    db.Necessidade.Add(necessidade);
+                    await db.SaveChangesAsync();
+                }
                 return RedirectToAction("Index");
             }
 
@@ -67,6 +75,7 @@ namespace Doando.Controllers
         }
 
         // GET: Necessidade/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,33 +87,49 @@ namespace Doando.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ID_ONG = new SelectList
-               (
-                    db.Ong.ToList(),
-                   "ID_ONG",
-                   "NOME",
-                   necessidade.ID_ONG
-               );
-            return View(necessidade);
+            string userId = User.Identity.GetUserId();
+            if (necessidade.Ong.ID_USER.Equals(userId))
+            {
+                ViewBag.ID_ONG = new SelectList
+                   (
+                        db.Ong.Where(ong => ong.ID_USER == userId).ToList(),
+                       "ID_ONG",
+                       "NOME",
+                       necessidade.ID_ONG
+                   );
+                return View(necessidade);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: Necessidade/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG,CNPJ")] Necessidade necessidade)
+        public async Task<ActionResult> Edit([Bind(Include = "ID_NECESSIDADE,DESCRICAO,TITULO,PRIORIDADE,DATA,ID_ONG,CNPJ")] Necessidade necessidadeVM)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(necessidade).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                Necessidade necessidade = db.Necessidade.Find(necessidadeVM.ID_NECESSIDADE);
+                if (User.Identity.GetUserId().Equals(necessidade.Ong.ID_USER))
+                {
+                    necessidade.PRIORIDADE = necessidadeVM.PRIORIDADE;
+                    necessidade.TITULO = necessidadeVM.TITULO;
+                    necessidade.DESCRICAO = necessidadeVM.DESCRICAO;
+                    necessidade.DATA = necessidadeVM.DATA;
+                    necessidade.CNPJ = necessidadeVM.CNPJ;
+                    db.Entry(necessidade).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                }
                 return RedirectToAction("Index");
             }
-            return View(necessidade);
+            return View(necessidadeVM);
         }
 
         // GET: Necessidade/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -116,17 +141,25 @@ namespace Doando.Controllers
             {
                 return HttpNotFound();
             }
-            return View(necessidade);
+            if (necessidade.Ong.ID_USER.Equals(User.Identity.GetUserId()))
+            {
+                return View(necessidade);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: Necessidade/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Necessidade necessidade = await db.Necessidade.FindAsync(id);
-            db.Necessidade.Remove(necessidade);
-            await db.SaveChangesAsync();
+            if (necessidade.Ong.ID_USER.Equals(User.Identity.GetUserId()))
+            {
+                db.Necessidade.Remove(necessidade);
+                await db.SaveChangesAsync();
+            }
             return RedirectToAction("Index");
         }
 

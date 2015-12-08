@@ -89,7 +89,7 @@ namespace Doando.Controllers
             {
                 return View(ong);
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         // POST: Ong/Edit/5
@@ -98,15 +98,26 @@ namespace Doando.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID_ONG,CNPJ,NOME,SITE,EMAIL,ENDERECO")] Ong ong)
+        public async Task<ActionResult> Edit([Bind(Include = "ID_ONG,CNPJ,NOME,SITE,EMAIL,ENDERECO,ID_USER")] Ong ongVM)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ong).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                Ong ong = db.Ong.Find(ongVM.ID_ONG);
+                if (User.Identity.GetUserId().Equals(ong.ID_USER))
+                {
+                    ong.NOME = ongVM.NOME;
+                    ong.SITE = ong.SITE;
+                    ong.CNPJ = ongVM.CNPJ;
+                    ong.EMAIL = ongVM.EMAIL;
+                    ong.Endereco = ongVM.Endereco;
+                    ong.Endereco.ID_END = ong.ID_END;
+                    db.Entry(ong).State = EntityState.Modified;
+                    db.Entry(ong.Endereco).State = EntityState.Modified;
+                    await db.SaveChangesAsync();                    
+                }
                 return RedirectToAction("Index");
             }
-            return View(ong);
+            return View(ongVM);
         }
 
         // GET: Ong/Delete/5
@@ -126,7 +137,7 @@ namespace Doando.Controllers
             {
                 return View(ong);
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         // POST: Ong/Delete/5
