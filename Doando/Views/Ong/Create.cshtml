@@ -1,10 +1,10 @@
 ﻿@model Doando.ViewModel.OngViewModel
 
 @{
-    ViewBag.Title = "Criar conta";
+    ViewBag.Title = "Adicionar nova ONG";
 }
 
-<h2>Criar conta</h2>
+<h2>Adicionar</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -57,13 +57,17 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Cadastrar" class="btn btn-success" />
+                <div class="btn btn-default">
+                    @Html.ActionLink("Cancelar", "Index")
+                </div>
+                
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Voltar", "Index")
+    
 </div>
 
 @section Scripts {
