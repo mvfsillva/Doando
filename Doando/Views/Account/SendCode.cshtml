@@ -1,6 +1,6 @@
 ﻿@model Doando.Models.SendCodeViewModel
 @{
-    ViewBag.Title = "Send";
+    ViewBag.Title = "Enviar código";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -14,7 +14,7 @@
         <div class="col-md-8">
             Select Two-Factor Authentication Provider:
             @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers)
-            <input type="submit" value="Submit" class="btn btn-default" />
+            <input type="submit" value="Enviar" class="btn btn-sucess" />
         </div>
     </div>
 }
