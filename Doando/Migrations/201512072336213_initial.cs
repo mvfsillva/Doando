@@ -42,7 +42,7 @@ namespace Doando.Migrations
                 c => new
                     {
                         ID_ONG = c.Int(nullable: false, identity: true),
-                        CNPJ = c.String(nullable: false, maxLength: 14, unicode: false),
+                        CNPJ = c.String(nullable: false, maxLength: 100, unicode: false),
                         NOME = c.String(nullable: false, maxLength: 100, unicode: false),
                         SITE = c.String(nullable: false, maxLength: 100, unicode: false),
                         EMAIL = c.String(nullable: false, maxLength: 100),

@@ -13,7 +13,7 @@ namespace Doando.Models
         public int ID_ONG { get; set; }
 
         [Required]
-        [StringLength(14)]
+        [StringLength(100)]
         public string CNPJ { get; set; }
 
         [Required]
