@@ -39,6 +39,7 @@ namespace Doando.Controllers
         }
 
         // GET: Ong/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
